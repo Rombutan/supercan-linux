@@ -1657,10 +1657,8 @@ static int sc_usb_netdev_init(struct sc_usb_priv *usb_priv)
 	spin_lock_init(&usb_priv->tx_lock);
 	// spin_lock_init(&usb_priv->rx_lock);
 
-	/* always init timer so it is safe to cancel */
-	hrtimer_init(&usb_priv->tx_batch_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
-	usb_priv->tx_batch_timer.function = &sc_tx_batch_timer_expired;
-	usb_priv->tx_batch_timer_initialized = 1;
+	/* always setup timer so it is safe to cancel */
+	hrtimer_setup(&usb_priv->tx_batch_timer, &sc_tx_batch_timer_expired, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
 
 	usb_priv->tx_cmd_buffer = kmalloc(2 * usb_priv->cmd_buffer_size, GFP_KERNEL);
 	if (!usb_priv->tx_cmd_buffer) {
