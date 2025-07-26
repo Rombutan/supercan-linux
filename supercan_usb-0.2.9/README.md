@@ -26,6 +26,15 @@ sudo kmodsign sha512 \
 
 ```
 
+For Fedora 41, this worked for me:
+
+```
+sudo /usr/src/kernels/$(uname -r)/scripts/sign-file sha256 \
+        /var/lib/dkms/mok.key \
+        /var/lib/dkms/mok.cert \
+        supercan_usb.ko 
+
+```
 
 
 ## Loading
